@@ -48,7 +48,7 @@ public class WelcomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int backgroundColor = ContextCompat.getColor(getContext(), R.color.red);
+        int backgroundColor = ContextCompat.getColor(getContext(), R.color.light_purple);
 
         binding.buttonWelcome.setEnabled(true);
         binding.buttonWelcome.setBackgroundColor(backgroundColor);

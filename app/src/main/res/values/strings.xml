@@ -12,7 +12,15 @@
 
     <!-- Parameters Activity > -->
 
-    <string name="title_parameters_activity">Here, you will find the application parameters </string>
-    <string name="preview_parameters_activity">IT WILL COMING SOON !!!</string>
+    <string name="title_parameters_activity"> Parameters </string>
+
+    <!-- Parameters onglet > -->
+
+    <string name="header_group_example"> Example header group </string>
+
+    <!-- Parameters onglet elements > -->
+
+    <string name="header_example"> Header example </string>
+    <string name="description_example"> Description example </string>
 
 </resources>

@@ -2,11 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_blue">#99ccff</color>
 
+    <!-- GROUP COLOR 1 > -->
     <color name="dark_black">#000000</color>
     <color name="dark_red">#770000</color>
     <color name="red">#ff0000</color>
     <color name="orange">#ff5500</color>
     <color name="light_orange">#ffaa00</color>
+    <color name="grey">#566979</color>
+    <color name="light_grey">#b2b7bc</color>
+
+    <!-- GROUP COLOR 2 > -->
+    <color name="dark_purple">#0c134f</color>
+    <color name="blue">#1d267d</color>
+    <color name="purple">#5c469c</color>
+    <color name="light_purple">#d4adfc</color>
 
 </resources>
