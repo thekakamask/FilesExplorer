@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">FilesExplorer</string>
+
+    <!-- Welcome Fragment > -->
+
+    <string name="text_bouton_welcome_fragment">Let\'s go</string>
+
+    <!-- Explorer Fragment > -->
+
+    <string name="title_explorer_fragment">Here, you will find the file explorer</string>
+    <string name="preview_explorer_fragment">IT WILL COMING SOON !!!</string>
+
+    <!-- Parameters Activity > -->
+
+    <string name="title_parameters_activity">Here, you will find the application parameters </string>
+    <string name="preview_parameters_activity">IT WILL COMING SOON !!!</string>
+
 </resources>
