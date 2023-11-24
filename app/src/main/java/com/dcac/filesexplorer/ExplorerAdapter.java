@@ -15,9 +15,11 @@ import java.util.List;
 public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHolder> {
 
     private List<File> mFiles;
+    private OnFileSelectedListener listener;
 
-    public ExplorerAdapter(List<File> files) {
-        mFiles=files;
+    public ExplorerAdapter(List<File> files, OnFileSelectedListener listener) {
+        mFiles = files;
+        this.listener = listener;
     }
 
 
@@ -32,6 +34,20 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
     public void onBindViewHolder(@NonNull ExplorerAdapter.ViewHolder holder, int position) {
         File file = mFiles.get(position);
         holder.fileNameView.setText(file.getName());
+
+        if (file.isDirectory()) {
+            holder.fileIconView.setImageResource(R.drawable.folder_logo);
+        } else {
+            holder.fileIconView.setImageResource(R.drawable.file_logo);
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener!=null) {
+                    listener.onFileSelected(file);
+                }
+            }
+        });
     }
 
     @Override
@@ -54,5 +70,9 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
             fileNameView = view.findViewById(R.id.file_name_text);
             fileIconView = view.findViewById(R.id.file_icon);
         }
+    }
+
+    public interface OnFileSelectedListener {
+        void onFileSelected(File file);
     }
 }

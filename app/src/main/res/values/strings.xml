@@ -24,5 +24,6 @@
 
     <!-- Explorer Fragment Item > -->
     <string name="explorer_fragment_item_example"> File name example </string>
+    <string name="retour">Return to parent folder</string>
 
 </resources>

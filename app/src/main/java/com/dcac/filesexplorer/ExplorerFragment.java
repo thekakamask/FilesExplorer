@@ -3,6 +3,8 @@ package com.dcac.filesexplorer;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -25,10 +27,12 @@ import java.util.Arrays;
  * Use the {@link ExplorerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExplorerFragment extends Fragment {
+public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFileSelectedListener {
 
     private FragmentExplorerBinding binding;
     private ExplorerAdapter adapter;
+
+    private File currentDirectory;
 
 
     public static ExplorerFragment newInstance() {
@@ -46,29 +50,74 @@ public class ExplorerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentExplorerBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        int backgroundColor = ContextCompat.getColor(getContext(), R.color.light_blue);
+        binding.backButton.setBackgroundColor(backgroundColor);
+
         initRecyclerView();
         listFiles();
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.fileExplorerRecyclerview.getContext(), DividerItemDecoration.VERTICAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.explorerRecyclerview.getContext(), DividerItemDecoration.VERTICAL);
 
         Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.cell_border);
         dividerItemDecoration.setDrawable(dividerDrawable);
 
-        binding.fileExplorerRecyclerview.addItemDecoration(dividerItemDecoration);
-        return binding.getRoot();
+        binding.explorerRecyclerview.addItemDecoration(dividerItemDecoration);
+
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackToParentFolder();
+            }
+        });
+
     }
 
-    private void listFiles() {
-        File root = Environment.getExternalStorageDirectory();
-        File[] files = root.listFiles();
-        if (files != null) {
-            adapter.updateFiles(Arrays.asList(files));
+    private void goBackToParentFolder() {
+        if (currentDirectory != null && !currentDirectory.equals(Environment.getExternalStorageDirectory())) {
+            updateFileList(currentDirectory.getParentFile());
         }
     }
 
+
+
+
     private void initRecyclerView() {
-        adapter = new ExplorerAdapter(new ArrayList<>());
-        binding.fileExplorerRecyclerview.setAdapter(adapter);
-        binding.fileExplorerRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new ExplorerAdapter(new ArrayList<>(), (ExplorerAdapter.OnFileSelectedListener) this);
+        binding.explorerRecyclerview.setAdapter(adapter);
+        binding.explorerRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+
+    @Override
+    public void onFileSelected (File file) {
+        if (file.isDirectory()) {
+            updateFileList(file);
+        } else {
+        }
+    }
+
+    private void updateFileList(File directory) {
+        currentDirectory = directory;
+        File[] files = directory.listFiles();
+        if (files != null) {
+            adapter.updateFiles(Arrays.asList(files));
+        }
+
+        binding.backButton.setVisibility(currentDirectory.equals(Environment.getExternalStorageDirectory()) ? View.GONE : View.VISIBLE);
+
+    }
+
+    private void listFiles() {
+        if (currentDirectory == null) {
+            currentDirectory = Environment.getExternalStorageDirectory();
+        }
+        updateFileList(currentDirectory);
     }
 }
