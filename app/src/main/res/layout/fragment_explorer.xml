@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="?attr/colorButtonNormal">
 
     <LinearLayout
         android:id="@+id/header_parameters_activity"
@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="16dp"
-        android:background="@color/light_blue">
+        android:background="?attr/colorPrimary">
 
         <ImageView
             android:id="@+id/header_icon_parameters_activity"
@@ -27,7 +27,7 @@
             android:textSize="30sp"
             android:text="@string/title_explorer_fragment"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/grey"
+            android:textColor="?attr/controlBackground"
             android:textStyle="bold"/>
 
     </LinearLayout>

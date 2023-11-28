@@ -1,28 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.FilesExplorer" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <!-- BaseTheme -->
+    <style name="BaseTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/light_blue</item>
         <item name="colorPrimaryDark">@color/blue</item>
         <item name="colorAccent">@color/purple</item>
-
     </style>
 
-    <style name="LightTheme" parent="Theme.AppCompat">
-
+    <!-- LightTheme -->
+    <style name="LightTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/dark_white</item>
         <item name="colorPrimaryDark">@color/lighter_grey</item>
         <item name="colorAccent">@color/light_grey</item>
-
     </style>
 
-
-    <style name="DarkTheme" parent="Theme.AppCompat">
-
+    <!-- DarkTheme -->
+    <style name="DarkTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/dark_black</item>
         <item name="colorPrimaryDark">@color/dark_grey</item>
         <item name="colorAccent">@color/darker_grey</item>
-
     </style>
+
+
 </resources>

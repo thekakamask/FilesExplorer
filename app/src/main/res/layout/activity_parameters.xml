@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="?attr/colorButtonNormal">
 
     <LinearLayout
         android:id="@+id/header_parameters_activity"
@@ -11,7 +11,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="16dp"
-        android:background="@color/blue">
+        android:background="?attr/colorPrimaryDark">
 
         <ImageView
             android:id="@+id/header_icon_parameters_activity"
@@ -26,7 +26,7 @@
             android:textSize="30sp"
             android:text="@string/title_parameters_activity"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/grey"
+            android:textColor="?attr/controlBackground"
             android:textStyle="bold"/>
 
     </LinearLayout>
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header_parameters_activity"
-        android:divider="@android:color/darker_gray"
+        android:divider="?attr/controlBackground"
         android:dividerHeight="1dp"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         />
