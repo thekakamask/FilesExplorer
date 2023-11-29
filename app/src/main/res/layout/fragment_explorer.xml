@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="?attr/colorButtonNormal">
+    android:background="?attr/colorPrimaryDark">
 
     <LinearLayout
         android:id="@+id/header_parameters_activity"
@@ -27,7 +27,7 @@
             android:textSize="30sp"
             android:text="@string/title_explorer_fragment"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="?attr/controlBackground"
+            android:textColor="?attr/colorAccent"
             android:textStyle="bold"/>
 
     </LinearLayout>

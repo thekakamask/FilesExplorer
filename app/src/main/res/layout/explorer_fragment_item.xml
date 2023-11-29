@@ -20,6 +20,6 @@
         android:layout_marginStart="16dp"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textColor="?attr/colorButtonNormal"
         android:text="Nom du dossier" />
 </LinearLayout>

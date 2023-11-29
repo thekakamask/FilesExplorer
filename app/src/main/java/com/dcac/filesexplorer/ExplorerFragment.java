@@ -1,5 +1,6 @@
 package com.dcac.filesexplorer;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Environment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +59,7 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int backgroundColor = ContextCompat.getColor(getContext(), R.color.light_red);
+        int backgroundColor = getThemeColor(getContext(), androidx.appcompat.R.attr.colorPrimary);
         binding.backButton.setBackgroundColor(backgroundColor);
 
         initRecyclerView();
@@ -121,7 +123,10 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
         updateFileList(currentDirectory);
     }
 
-    public void updateThemeRelatedViews() {
-        // Mettre à jour les couleurs, styles, etc., en fonction du thème
+
+    public static int getThemeColor(Context context, int attributeColor) {
+        TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(attributeColor, typedValue, true);
+        return typedValue.data;
     }
 }
