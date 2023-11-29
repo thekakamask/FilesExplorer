@@ -120,4 +120,8 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
         }
         updateFileList(currentDirectory);
     }
+
+    public void updateThemeRelatedViews() {
+        // Mettre à jour les couleurs, styles, etc., en fonction du thème
+    }
 }

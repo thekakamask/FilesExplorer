@@ -9,5 +9,5 @@
     android:textSize="18sp"
     android:textStyle="bold"
     android:text="@string/header_group_example"
-    android:background="?attr/colorButtonNormal"
+    android:background="?attr/colorPrimary"
     />

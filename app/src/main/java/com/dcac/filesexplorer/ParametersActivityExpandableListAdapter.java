@@ -1,6 +1,7 @@
 package com.dcac.filesexplorer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,30 +116,42 @@ public class ParametersActivityExpandableListAdapter extends BaseExpandableListA
                 // Décocher toutes les autres CheckBox du groupe
                 for (int i = 0; i < getChildrenCount(groupPosition); i++) {
                     ParametersItem item = listChildData.get(listGroupTitles.get(groupPosition)).get(i);
-                    item.setChecked(false);
+                    item.setChecked(i == childPosition);
                 }
 
                 // Cocher la CheckBox actuelle
-                childItem.setChecked(true);
+                //childItem.setChecked(true);
                 notifyDataSetChanged(); // Rafraîchir la vue
 
                 if (groupPosition == 0) { // Si c'est le groupe des thèmes
                     String themeName = null;
+                    int themeIndex = -1;
                     switch (childItem.getTitle()) {
                         case "Light theme":
                             themeName = "LightTheme";
+                            themeIndex = 1;
                             break;
                         case "Dark theme":
                             themeName = "DarkTheme";
+                            themeIndex = 2;
                             break;
                         default:
                             themeName = "BaseTheme";
+                            themeIndex = 0;
                             break;
                     }
+                    SharedPreferences prefs = context.getSharedPreferences("AppSettingsPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putInt("SelectedThemeIndex", themeIndex);
+                    editor.apply();
+
                     onThemeChangeListener.onThemeChanged(themeName);
                 }
             }
         });
+
+        // Assurez-vous que la case à cocher reflète l'état actuel de ParametersItem
+        holder.checkBox.setChecked(childItem.isChecked());
 
         return convertView;
 

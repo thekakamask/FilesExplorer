@@ -37,6 +37,9 @@ public class ParametersActivity extends AppCompatActivity implements ParametersA
 
     // Préparer les données pour l'ExpandableListView
     private void prepareListData() {
+        SharedPreferences prefs = getSharedPreferences("AppSettingsPrefs", MODE_PRIVATE);
+        int selectedThemeIndex = prefs.getInt("SelectedThemeIndex", 0); // 0 est l'index par défaut pour BaseTheme
+
         listGroupTitles = new ArrayList<>();
         listChildData = new HashMap<>();
 
@@ -44,13 +47,17 @@ public class ParametersActivity extends AppCompatActivity implements ParametersA
         List<ParametersItem> userCommands = new ArrayList<>();
         List<ParametersItem> thirdGroup = new ArrayList<>();
 
+        for (int i = 0; i < themes.size(); i++) {
+            themes.get(i).setChecked(i == selectedThemeIndex);
+        }
+
         listGroupTitles.add("Themes");
         listGroupTitles.add("Global title example 2");
         listGroupTitles.add("Global title example 3");
 
-        themes.add(new ParametersItem("Base theme", "this theme is the basic theme", true));
-        themes.add(new ParametersItem("Light theme", "this theme is for the day", false));
-        themes.add(new ParametersItem("Dark theme", "this theme is for the night", false));
+        themes.add(new ParametersItem("Base theme", "this theme is the basic theme", selectedThemeIndex == 0));
+        themes.add(new ParametersItem("Light theme", "this theme is for the day", selectedThemeIndex == 1));
+        themes.add(new ParametersItem("Dark theme", "this theme is for the night", selectedThemeIndex == 2));
 
         userCommands.add(new ParametersItem("Title example 1", "Description example 1", false));
         userCommands.add(new ParametersItem("Title example 2", "Description example 2", false));
@@ -73,8 +80,7 @@ public class ParametersActivity extends AppCompatActivity implements ParametersA
         editor.putString("SelectedTheme", themeName);
         editor.apply();
 
-        // Redémarrer l'activité pour appliquer le thème
-        recreate();
+        recreate(); // Redémarrer l'activité pour appliquer le thème
     }
 
     private void applySelectedTheme() {
