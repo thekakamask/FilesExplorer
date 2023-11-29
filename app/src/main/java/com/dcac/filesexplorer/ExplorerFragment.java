@@ -41,20 +41,26 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
 
     private FragmentExplorerBinding binding;
     private ExplorerAdapter adapter;
+
     private File currentDirectory;
+
     private ActivityResultLauncher<String> requestPermissionLauncher;
 
+
+
     public static ExplorerFragment newInstance() {
-        return new ExplorerFragment();
+        ExplorerFragment fragment = new ExplorerFragment();
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
             if (isGranted) {
                 listFiles();
-                listImages();
+                // Vous pouvez lister les images, vidéos, audio ici si nécessaire
             } else {
                 // Gérer le cas où la permission est refusée
             }
@@ -62,11 +68,9 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         binding = FragmentExplorerBinding.inflate(inflater, container, false);
-        adapter = new ExplorerAdapter(new ArrayList<>(), this); // Initialisation de l'adapter
-        binding.explorerRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.explorerRecyclerview.setAdapter(adapter); // Attachement de l'adapter
         return binding.getRoot();
     }
 
@@ -77,29 +81,33 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
         int backgroundColor = getThemeColor(getContext(), androidx.appcompat.R.attr.colorPrimary);
         binding.backButton.setBackgroundColor(backgroundColor);
 
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            listFiles();       // listFiles() appelé après l'initialisation de l'adapter
-            listImages();
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES);
+        }
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_MEDIA_VIDEO) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_VIDEO);
+        }
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_MEDIA_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_AUDIO);
         }
 
-        // Configuration de la décoration du RecyclerView
-        configureRecyclerViewDecoration();
-
-        binding.backButton.setOnClickListener(v -> goBackToParentFolder());
-    }
-
-    private void configureRecyclerViewDecoration() {
-        int dividerHeightInDp = 1;
-        binding.explorerRecyclerview.addItemDecoration(
-                new ThemeDividerItemDecoration(getContext(), androidx.appcompat.R.attr.colorButtonNormal, dividerHeightInDp)
-        );
+        initRecyclerView();
+        listFiles();
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.explorerRecyclerview.getContext(), DividerItemDecoration.VERTICAL);
+
         Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.cell_border);
         dividerItemDecoration.setDrawable(dividerDrawable);
+
         binding.explorerRecyclerview.addItemDecoration(dividerItemDecoration);
+
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackToParentFolder();
+            }
+        });
+
     }
 
     private void goBackToParentFolder() {
@@ -108,26 +116,33 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
         }
     }
 
+
+
+
+    private void initRecyclerView() {
+        adapter = new ExplorerAdapter(new ArrayList<>(), (ExplorerAdapter.OnFileSelectedListener) this);
+        binding.explorerRecyclerview.setAdapter(adapter);
+        binding.explorerRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+
     @Override
-    public void onFileSelected(File file) {
+    public void onFileSelected (File file) {
         if (file.isDirectory()) {
             updateFileList(file);
         } else {
-            // Traiter le cas des fichiers non répertoire
         }
     }
 
     private void updateFileList(File directory) {
         currentDirectory = directory;
         File[] files = directory.listFiles();
-        Log.d("ExplorerFragment", "Nombre de fichiers: " + files.length);
-        for (File file : files) {
-            Log.d("ExplorerFragment", "Fichier trouvé: " + file.getName());
-        }
         if (files != null) {
             adapter.updateFiles(Arrays.asList(files));
         }
+
         binding.backButton.setVisibility(currentDirectory.equals(Environment.getExternalStorageDirectory()) ? View.GONE : View.VISIBLE);
+
     }
 
     private void listFiles() {
@@ -137,39 +152,10 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
         updateFileList(currentDirectory);
     }
 
+
     public static int getThemeColor(Context context, int attributeColor) {
         TypedValue typedValue = new TypedValue();
         context.getTheme().resolveAttribute(attributeColor, typedValue, true);
         return typedValue.data;
-    }
-
-    private void listImages() {
-        String[] projection = new String[]{
-                MediaStore.Images.Media._ID,
-                MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.SIZE
-        };
-
-        try (Cursor cursor = getContext().getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                projection,
-                null,
-                null,
-                null)) {
-
-            if (cursor != null) {
-                int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
-                int nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME);
-                int sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE);
-
-                while (cursor.moveToNext()) {
-                    long id = cursor.getLong(idColumn);
-                    String name = cursor.getString(nameColumn);
-                    int size = cursor.getInt(sizeColumn);
-
-                    Log.d("ExplorerFragment", "Image trouvée: " + name + ", Taille: " + size);
-                }
-            }
-        }
     }
 }
