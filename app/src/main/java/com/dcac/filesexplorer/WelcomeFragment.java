@@ -1,5 +1,6 @@
 package com.dcac.filesexplorer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +50,7 @@ public class WelcomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int backgroundColor = ContextCompat.getColor(getContext(), R.color.light_blue);
+        int backgroundColor = getThemeColor(getContext(), androidx.appcompat.R.attr.colorPrimary);
 
         binding.buttonWelcome.setEnabled(true);
         binding.buttonWelcome.setBackgroundColor(backgroundColor);
@@ -75,5 +77,11 @@ public class WelcomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    public static int getThemeColor(Context context, int attributeColor) {
+        TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(attributeColor, typedValue, true);
+        return typedValue.data;
     }
 }

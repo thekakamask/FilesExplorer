@@ -2,24 +2,30 @@
     <!-- Base application theme. -->
     <!-- BaseTheme -->
     <style name="BaseTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/light_blue</item>
-        <item name="colorPrimaryDark">@color/blue</item>
-        <item name="colorAccent">@color/grey</item>
+        <item name="colorPrimary">@color/light_red</item>
+        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorAccent">@color/white</item>
         <item name="colorControlNormal">@color/black</item>
         <item name="colorButtonNormal">@color/white</item>
-        <item name="colorSwitchThumbNormal">@color/darker_grey</item>
-        <item name="controlBackground">@color/purple</item>
+
+        <item name="colorSwitchThumbNormal">@color/dark_white</item>
+
+        <item name="controlBackground">@color/darker_grey</item>
 
     </style>
 
     <!-- LightTheme -->
     <style name="LightTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/light_grey</item>
-        <item name="colorAccent">@color/grey</item>
-        <item name="colorControlNormal">@color/black</item>
-        <item name="colorButtonNormal">@color/lighter_grey</item>
-        <item name="colorSwitchThumbNormal">@color/darker_grey</item>
+
+        <item name="colorPrimary">@color/light_grey</item>
+
+        <item name="colorPrimaryDark">@color/dark_white</item>
+        <item name="colorAccent">@color/dark_white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorButtonNormal">@color/black</item>
+
+        <item name="colorSwitchThumbNormal">@color/black</item>
+
         <item name="controlBackground">@color/dark_white</item>
     </style>
 
@@ -27,10 +33,12 @@
     <style name="DarkTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/dark_black</item>
         <item name="colorPrimaryDark">@color/dark_grey</item>
-        <item name="colorAccent">@color/darker_grey</item>
+        <item name="colorAccent">@color/white</item>
         <item name="colorControlNormal">@color/black</item>
         <item name="colorButtonNormal">@color/white</item>
-        <item name="colorSwitchThumbNormal">@color/darker_grey</item>
+
+        <item name="colorSwitchThumbNormal">@color/dark_white</item>
+
         <item name="controlBackground">@color/grey</item>
     </style>
 

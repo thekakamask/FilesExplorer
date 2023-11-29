@@ -57,7 +57,7 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int backgroundColor = ContextCompat.getColor(getContext(), R.color.light_blue);
+        int backgroundColor = ContextCompat.getColor(getContext(), R.color.light_red);
         binding.backButton.setBackgroundColor(backgroundColor);
 
         initRecyclerView();

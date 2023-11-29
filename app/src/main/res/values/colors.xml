@@ -6,7 +6,6 @@
 
     <!-- GROUP COLOR 1 > -->
     <color name="dark_red">#770000</color>
-    <color name="red">#ff0000</color>
     <color name="orange">#ff5500</color>
     <color name="light_orange">#ffaa00</color>
     <color name="grey">#566979</color>
@@ -17,8 +16,8 @@
 
     <!-- BASE THEME > -->
 
-    <color name="light_blue">#99ccff</color>
-    <color name="blue">#1d267d</color>
+    <color name="light_red">#ee0f0f</color>
+    <color name="red">#90030c</color>
     <color name="purple">#5c469c</color>
 
     <!-- LIGHT THEME > -->
