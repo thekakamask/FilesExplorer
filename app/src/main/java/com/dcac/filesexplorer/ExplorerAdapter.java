@@ -1,5 +1,6 @@
 package com.dcac.filesexplorer;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,9 @@ public class ExplorerAdapter extends RecyclerView.Adapter<ExplorerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ExplorerAdapter.ViewHolder holder, int position) {
         File file = mFiles.get(position);
+
+        Log.d("ExplorerAdapter", "Fichier à la position " + position + ": " + file.getName() + " (Dossier: " + file.isDirectory() + ")");
+
         holder.fileNameView.setText(file.getName());
 
         if (file.isDirectory()) {
