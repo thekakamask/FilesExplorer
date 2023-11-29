@@ -1,9 +1,12 @@
 package com.dcac.filesexplorer;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -11,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.Manifest;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -131,7 +136,35 @@ public class ExplorerFragment extends Fragment implements ExplorerAdapter.OnFile
         if (file.isDirectory()) {
             updateFileList(file);
         } else {
+            openFile(file);
         }
+    }
+
+    private void openFile(File file) {
+        Context context = getContext();
+        if (context == null) return;
+
+        Uri fileUri = FileProvider.getUriForFile(context,"com.dcac.filesexplorer.fileprovider", file);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        if (file.getName().endsWith(".jpg") || file.getName().endsWith(".png"))  {
+            intent.setDataAndType(fileUri, "image/*");
+        } else if (file.getName().endsWith(".mp3")) {
+            intent.setDataAndType(fileUri, "audio/*");
+        } else if (file.getName().endsWith(".mp4")) {
+            intent.setDataAndType(fileUri, "video/*");
+        }else {
+            intent.setDataAndType(fileUri, "*/*");
+        }
+
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(context, "Aucune application pour ouvrir ce fichier", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void updateFileList(File directory) {
